@@ -5,6 +5,8 @@ int checkPos() {
 	return 0;
 }
 
+
+
 void place(char arr[][3], int player, int pos) {
 	int x = 0;
 	int y = 0;
@@ -16,18 +18,27 @@ void place(char arr[][3], int player, int pos) {
 	if(player == 2) {
 		piece = 'O';
 	}
-
+ 
 	for(int i = 0; i < pos; i ++) {
 		x++;
-		if(x > 3) {
+		if(x > 2) {
 			x = 0;
 			y++;
 		}
 	}
-	cout << x;
-	cout << y;
-	
+  x--;
+	arr[y][x] = piece;
 }
+
+void togglePlayer(int &player) {
+  if(&player == 1) {
+    &player = 2;
+  }
+  if(&player == 2) {
+    &player = 1;
+  }
+}
+
 
 
 void dispArr(char arr[][3]) {	
@@ -42,6 +53,7 @@ void dispArr(char arr[][3]) {
 		cout << "-------" << endl;
 	}
 }
+
 
 
 int main()
@@ -68,14 +80,23 @@ int main()
 	cout << "select the position to place it in.\n";
 	
 	while(run) {
-		cout << "Player" << player << ", Select where to place a piece.\n";
+		cout << "Player " << player << ", Select where to place a piece.\n";
 		dispArr(game);
 		
-		cin >> pos;
+		bool wait = true;
+    
+    while(wait){
+      cin >> pos;
+      if(pos > 9 || pos < 1) {
+        cout << "Invalid position\n";
+      }else {
+        wait = false;
+      }
+    }
+    
 		place(game, player, pos);
-
-		run = !run;
+    togglePlayer(player);
+    cout << player << endl;
 	}
-
     return 0;
 }
