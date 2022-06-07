@@ -5,8 +5,28 @@ int checkPos() {
 	return 0;
 }
 
-int place(int arr[], int player, int pos) {
-	return 0;
+void place(char arr[][3], int player, int pos) {
+	int x = 0;
+	int y = 0;
+	char piece;
+
+	if(player == 1) {
+		piece = 'X';
+	}
+	if(player == 2) {
+		piece = 'O';
+	}
+
+	for(int i = 0; i < pos; i ++) {
+		x++;
+		if(x > 3) {
+			x = 0;
+			y++;
+		}
+	}
+	cout << x;
+	cout << y;
+	
 }
 
 
@@ -52,6 +72,7 @@ int main()
 		dispArr(game);
 		
 		cin >> pos;
+		place(game, player, pos);
 
 		run = !run;
 	}
