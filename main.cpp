@@ -1,13 +1,17 @@
 #include <iostream>
 using namespace std;
 
-int checkPos() {
-	return 0;
+bool checkPos(char arr[][3], int x, int y) {
+  if(arr[y][x] == '-') {
+    return true;
+  }else {
+    return false;
+  }
 }
 
 
 
-void place(char arr[][3], int player, int pos) {
+int place(char arr[][3], int player, int pos) {
 	int x = 0;
 	int y = 0;
 	char piece;
@@ -27,8 +31,17 @@ void place(char arr[][3], int player, int pos) {
 		}
 	}
   x--;
-	arr[y][x] = piece;
+  
+  if(checkPos(arr, x, y)) {
+    	arr[y][x] = piece;
+  }else {
+    cout << "That space is not available\n";
+    return 1;
+  }
+  return 0;
 }
+
+
 
 void togglePlayer(int *player) {
   if(*player == 1) {
