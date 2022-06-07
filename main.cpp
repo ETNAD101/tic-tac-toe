@@ -30,12 +30,11 @@ void place(char arr[][3], int player, int pos) {
 	arr[y][x] = piece;
 }
 
-void togglePlayer(int &player) {
-  if(&player == 1) {
-    &player = 2;
-  }
-  if(&player == 2) {
-    &player = 1;
+void togglePlayer(int *player) {
+  if(*player == 1) {
+    *player = 2;
+  }else if(*player == 2) {
+    *player = 1;
   }
 }
 
@@ -59,6 +58,7 @@ void dispArr(char arr[][3]) {
 int main()
 {
 	int player = 1;
+  int *playerptr = &player;
 	int pos;
 	bool run = true;
 	
@@ -95,8 +95,7 @@ int main()
     }
     
 		place(game, player, pos);
-    togglePlayer(player);
-    cout << player << endl;
+    togglePlayer(playerptr);
 	}
     return 0;
 }
