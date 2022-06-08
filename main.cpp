@@ -1,4 +1,6 @@
 #include <iostream>
+#include "wincheck.h"
+
 using namespace std;
 
 bool checkPos(char arr[][3], int x, int y) {
@@ -31,14 +33,14 @@ int place(char arr[][3], int player, int pos) {
 		}
 	}
   x--;
-  
-  if(checkPos(arr, x, y)) {
-    	arr[y][x] = piece;
-  }else {
-    cout << "That space is not available\n";
-    return 1;
+
+	if(checkPos(arr, x, y)) {
+		arr[y][x] = piece;
+		return 0;
+	}else {
+		cout << "That space is not available\n";
+		return 1;
   }
-  return 0;
 }
 
 
@@ -71,7 +73,6 @@ void dispArr(char arr[][3]) {
 int main()
 {
 	int player = 1;
-  int *playerptr = &player;
 	int pos;
 	bool run = true;
 	
@@ -107,8 +108,14 @@ int main()
       }
     }
     
-		place(game, player, pos);
-    togglePlayer(playerptr);
+	int checkPlace = place(game, player, pos);
+	if(checkWin(game, player) != 0) {
+		cout << "Player " << player <<" won!" << endl;
+		run = false;
 	}
+	if(checkPlace == 0)
+		togglePlayer(&player);
+	}
+	
     return 0;
 }

@@ -1,2 +1,5 @@
 makefile
 out
+a.out
+test.cpp
+*.exe
