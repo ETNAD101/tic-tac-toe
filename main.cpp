@@ -73,6 +73,28 @@ void dispArr(char arr[][3]) {
 	}
 }
 
+void reset(char arr[][3]) {
+	for(int x = 0; x < 3; x++) {
+		for(int y = 0; y < 3; y++) {
+			arr[x][y] = '-';
+		}
+	}
+}
+
+//gives player option to quit or replay at the end of the game
+bool checkReplay(char arr[][3]) {
+	while(true) {
+		char a;
+		cout << "Would you like to play again? y/n" << endl;
+		cin >> a;
+		if(a == 'y') {
+			reset(arr);
+			return true;
+		}else if(a == 'n') {
+			return false;
+		}
+	}
+}
 
 //main function
 int main()
@@ -80,7 +102,7 @@ int main()
 	//initializing variables
 	int player = 1;
 	int pos;
-	int turns = 0;
+	int turn = 0;
 	bool run = true;
 	
 	//numbers on array corrospond to the game board positions
@@ -106,7 +128,7 @@ int main()
 	//main game loop
 	while(run) {
 		//counts the number of turns
-		turns ++;
+		turn++;
 		
 		//player choses where to place piece
 		cout << "Player " << player << ", Select where to place a piece.\n";
@@ -128,19 +150,25 @@ int main()
 
 		//checks to is if the last piece placed ended the game by either winning or a draw
 		if(checkWin(game, player) != 0) {
-			cout << "Player " << player <<" won!" << endl;
-			run = false;
 			dispArr(game);
-		}else if(turns == 9) {
+			cout << "Player " << player <<" won!" << endl;
+			run = checkReplay(game);
+			turn = 0;
+			player = 1;
+		}else if(turn == 9) {
+			dispArr(game);
 			cout << "Nobody won, Tie" << endl;
-			 run = false;
+			run = checkReplay(game);
+			turn = 0;
+			player = 1;
+		}else {
+			//if the piece was succesfully placed change to the next player
+			//otherwise redo the current player's turn
+			if(checkPlace == 0)
+				togglePlayer(&player);
+			}
 		}
 		
-		//if the piece was succesfully placed change to the next player
-		//otherwise redo the current player's turn
-		if(checkPlace == 0)
-			togglePlayer(&player);
-		}
-	
+				
     return 0;
 }
